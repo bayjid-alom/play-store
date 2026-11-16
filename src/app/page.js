@@ -6,7 +6,8 @@ export default function Home() {
   return (
     <>
 
-      This is HOME.
+      <Banner></Banner>
+      <Stats></Stats>
 
     </>
   );
