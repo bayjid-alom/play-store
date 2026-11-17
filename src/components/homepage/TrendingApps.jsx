@@ -1,9 +1,11 @@
+"use client"
+
 import React, { use, useEffect, useState } from 'react';
-import AppCard from '../../ui/AppCard';
 import { HashLoader } from 'react-spinners';
-import { Link } from 'react-router';
 import { ChevronRight } from 'lucide-react';
-import useApps from '../../hooks/useApps';
+import AppCard from '../ui/AppCard';
+import Link from 'next/link';
+import useApps from '@/hooks/useApps';
 
 
 const TrendingApps = () => {
@@ -34,7 +36,10 @@ const TrendingApps = () => {
                 {
                     loading ? (
                         <div className='flex justify-center mx-auto py-7'>
-                            <HashLoader color='#632EE3' size={35}></HashLoader>
+                            {/* Somehow not working Hashloader */}
+                            {/* <HashLoader color='#632EE3' size={35}></HashLoader> */}
+
+                            <span className="loading loading-dots loading-xl"></span>
                         </div>
 
                     ) : (
@@ -53,11 +58,10 @@ const TrendingApps = () => {
 
 
 
-
                 {/* View All Button */}
                 {
                     loading === false && <div className="flex justify-center mt-8">
-                        <Link to="/apps">
+                        <Link href="/apps">
                             <button className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#632EE3] to-[#9F62F2] px-8 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30">
                                 View all <ChevronRight size={18} />
                             </button>

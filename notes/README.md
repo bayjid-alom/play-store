@@ -198,6 +198,8 @@ Add the following configuration to `next.config.mjs`:
 
 ## Part-05 
 
+- HashLoader was not working as expected, so replaced it with the DaisyUI spinner.
+18:30
 
 
 
