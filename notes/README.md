@@ -3,6 +3,8 @@
 ## Part-01: Introduction to Next.js
 - Introduction and overview of Next.js
 
+<br>
+
 
 
 ## Part-02: Project Setup & Routing
@@ -73,11 +75,19 @@ Use the `metadata` export to set the page title and description:
 
 Use `layout.jsx` to define the common structure shared across pages.
 
-    <body className="min-h-full flex flex-col">
-        <h2>Navbar</h2>
-        {children}
-        <h2>Footer</h2>
-    </body>
+```jsx
+ <body className="min-h-full flex flex-col">
+     <h2>Navbar</h2>
+     {children}
+     <h2>Footer</h2>
+ </body>
+```
+
+
+
+<br>
+
+
 
 ## Part-03: Navbar & Others
 
@@ -193,56 +203,52 @@ Add the following configuration to `next.config.mjs`:
 
 
 
+<br>
 
 
 
-## Part-05 
+## Part-05: Server Components, Data Fetching & Loading States
 
-- HashLoader was not working as expected, so replaced it with the DaisyUI spinner.
-18:30
+### DaisyUI Spinner
 
-- Trending apps to client component hoye gelo so ..take it server component
-- component ke server component rakhte ? useEffect , useState baad dite hobe..
+- HashLoader was not working as expected, so replaced it with the DaisyUI loading spinner.
 
-TrendingApps.jsx
+### Convert TrendingApps into a Server Component
+
+- TrendingApps was previously a Client Component. Now, convert it into a Server Component.
+- To keep a component as a Server Component, remove unnecessary `useEffect` and `useState` hooks.
+
+**TrendingApps.jsx**
 
 ```jsx
 const appsPromise = async function () {
-    // const res = await fetch("/data.json");   //Failed to parse URL from /data.json
+    // const res = await fetch("/data.json"); // Failed to parse URL from /data.json
     const res = await fetch("http://localhost:3000/data.json");
     const data = await res.json();
     return data;
-}
-
-
+};
 
 const TrendingApps = async () => {
-    const apps = await appsPromise()
-}
+    const apps = await appsPromise();
+};
 ```
 
+### Global Loading Spinner
 
+- To show a loading spinner while a page is loading, create a `loading.jsx` file inside the `src/app` directory.
+- This works as a global loading UI for the routes.
 
-? Now How can show loading spinner?
-- amra age src > app er vitore not found hole not-found.jsx create korechilam ekoi vabe ...
-same directory te loading.jsx file create korbo
+\<details> \<summary>loading.jsx\</summary>
 
-- eta holo global spinner.
-
-<details>
-<summary>loading.jsx</summary>
-
-```
+```jsx
 const loading = () => {
     return (
         <div>
-
-            <div className='min-h-screen items-center flex justify-center mx-auto '>
-                {/* Somehow not working Hashloader */}
-                {/* <HashLoader color='#632EE3' size={35}></HashLoader> */}
+            <div className="min-h-screen items-center flex justify-center mx-auto">
+                {/* Somehow not working HashLoader */}
+                {/* <HashLoader color="#632EE3" size={35}></HashLoader> */}
                 <span className="loading loading-dots loading-xl"></span>
             </div>
-
         </div>
     );
 };
@@ -250,50 +256,94 @@ const loading = () => {
 export default loading;
 ```
 
-</details>
+\</details>
 
-<br>
+### Dynamic Content Based on Props
 
+- We can pass props to the same component to display different content on different pages.
+- Pass `from="homepage"` from the home page and `from="apps"` from the Apps page.
 
-###
-if we want we set for each page... 
-apps route e page.jsx e <TrendingApps>
-- Apps.page >>>>>>  <TrendingApps from="apps"></TrendingApps>
-- page.js (home) >>>> <TrendingApps from="homepage"></TrendingApps>
-- TrendingApps.jsx >>> const TrendingApps = async ({from}) => {}
+**Usage:**
 
+```jsx
+// Apps Page
+<TrendingApps from="apps"></TrendingApps>
+
+// Home Page
+<TrendingApps from="homepage"></TrendingApps>
 ```
- <h2 className="text-2xl font-extrabold text-gray-900 md:text-3xl lg:text-4xl">
-                        {
-                            from === "homepage" ? "Trending Apps" : "All Apps"
-                        }
+
+**TrendingApps.jsx**
+
+```jsx
+const TrendingApps = async ({ from }) => {
+    // Component content
+};
+```
+
+**Dynamic Heading:**
+
+```jsx
+<h2 className="text-2xl font-extrabold text-gray-900 md:text-3xl lg:text-4xl">
+    {from === "homepage" ? "Trending Apps" : "All Apps"}
 </h2>
 ```
 
+### Dynamic App Rendering
 
-
--- slice ta dynamic korte hobe....
-homepage hole 9 ta dekhabe ---other wise all show hobe
+- Show only 8 apps on the homepage.
+- Show all apps on the Apps page.
 
 ```jsx
 {
-apps.slice(0, from === "homepage" ? 8 : apps.length - 1).map((app, index) => <AppCard
-    key={index}
-    app={app}></AppCard>)
-
-    }
+    apps.slice(0, from === "homepage" ? 8 : apps.length - 1).map((app, index) => (
+        <AppCard
+            key={index}
+            app={app}
+        ></AppCard>
+    ))
+}
 ```
-(apps.length - 1)  why it's used here?
+
+- `apps.length - 1` is used as the ending index to exclude the last app from the result.
+- `slice()` does not include the ending index.
+
+### Route-Specific Loading Spinner
+
+- To show a separate loading spinner for a specific route, create a `loading.jsx` file inside that route's directory.
+- For example, create `loading.jsx` inside the `apps` directory to show a loading UI specifically for the Apps route.
+
+**Folder Structure:**
+
+```text
+src/
+└── app/
+    └── apps/
+        ├── page.jsx
+        ├── loading.jsx
+        └── [id]/
+```
+
+### Conditional View All Button
+
+- Show the View All button only on the homepage.
+- Use the `from` prop to conditionally render the button.
+
+```jsx
+{/* View All Button */}
+{
+    // loading === false &&
+    from === "homepage" &&
+    <div className="flex justify-center mt-8">
+        <Link href="/apps">
+            <button className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#632EE3] to-[#9F62F2] px-8 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30">
+                View all <ChevronRight size={18} />
+            </button>
+        </Link>
+    </div>
+}
+```
 
 
 
-
-
-
-
-
-
-
-
-
-
+Part-06 [03:30]
