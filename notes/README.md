@@ -201,6 +201,98 @@ Add the following configuration to `next.config.mjs`:
 - HashLoader was not working as expected, so replaced it with the DaisyUI spinner.
 18:30
 
+- Trending apps to client component hoye gelo so ..take it server component
+- component ke server component rakhte ? useEffect , useState baad dite hobe..
+
+TrendingApps.jsx
+
+```jsx
+const appsPromise = async function () {
+    // const res = await fetch("/data.json");   //Failed to parse URL from /data.json
+    const res = await fetch("http://localhost:3000/data.json");
+    const data = await res.json();
+    return data;
+}
+
+
+
+const TrendingApps = async () => {
+    const apps = await appsPromise()
+}
+```
+
+
+
+? Now How can show loading spinner?
+- amra age src > app er vitore not found hole not-found.jsx create korechilam ekoi vabe ...
+same directory te loading.jsx file create korbo
+
+- eta holo global spinner.
+
+<details>
+<summary>loading.jsx</summary>
+
+```
+const loading = () => {
+    return (
+        <div>
+
+            <div className='min-h-screen items-center flex justify-center mx-auto '>
+                {/* Somehow not working Hashloader */}
+                {/* <HashLoader color='#632EE3' size={35}></HashLoader> */}
+                <span className="loading loading-dots loading-xl"></span>
+            </div>
+
+        </div>
+    );
+};
+
+export default loading;
+```
+
+</details>
+
+<br>
+
+
+###
+if we want we set for each page... 
+apps route e page.jsx e <TrendingApps>
+- Apps.page >>>>>>  <TrendingApps from="apps"></TrendingApps>
+- page.js (home) >>>> <TrendingApps from="homepage"></TrendingApps>
+- TrendingApps.jsx >>> const TrendingApps = async ({from}) => {}
+
+```
+ <h2 className="text-2xl font-extrabold text-gray-900 md:text-3xl lg:text-4xl">
+                        {
+                            from === "homepage" ? "Trending Apps" : "All Apps"
+                        }
+</h2>
+```
+
+
+
+-- slice ta dynamic korte hobe....
+homepage hole 9 ta dekhabe ---other wise all show hobe
+
+```jsx
+{
+apps.slice(0, from === "homepage" ? 8 : apps.length - 1).map((app, index) => <AppCard
+    key={index}
+    app={app}></AppCard>)
+
+    }
+```
+(apps.length - 1)  why it's used here?
+
+
+
+
+
+
+
+
+
 
 
 

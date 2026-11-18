@@ -9,7 +9,7 @@ export default function Home() {
 
       <Banner></Banner>
       <Stats></Stats>
-      <TrendingApps></TrendingApps>
+      <TrendingApps from="homepage"></TrendingApps>
 
     </>
   );

@@ -8,7 +8,7 @@ const MyNavlink = ({ href, children, onClick }) => {
 
     const pathname = usePathname();
     const isActive = pathname === href;
-    console.log(pathname, "this  is active now");
+    // console.log(pathname, "this  is active now");
 
     // isActive = /
     // isActive = /apps
