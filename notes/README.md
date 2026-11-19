@@ -71,6 +71,7 @@ Use the `metadata` export to set the page title and description:
 
     const AppsPage = () => {};
 
+
 ### Layout Structure
 
 Use `layout.jsx` to define the common structure shared across pages.
@@ -349,6 +350,123 @@ src/
 
 
 
-## Part-06 
-[03:30]
 
+<br>
+
+
+
+
+
+## Part-06: App Details Page
+
+**apps > [id] > page.jsx**
+
+```jsx
+import { Download, MessageSquare, Star } from 'lucide-react';
+import Image from 'next/image';
+import React from 'react';
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+
+const appsPromise = async function () {
+    const res = await fetch("http://localhost:3000/data.json");
+    const data = await res.json();
+    return data;
+};
+
+const AppDetailsPage = async ({ params }) => {
+    const { id } = await params;
+    const apps = await appsPromise();
+
+    const app = apps.find(app => app.id === Number(id));
+
+    const {
+        image,
+        title,
+        companyName,
+        description,
+        size,
+        reviews,
+        ratingAvg,
+        downloads,
+        ratings
+    } = app;
+};
+```
+
+
+
+### Client Component for Button
+
+- Adding an event handler to a Server Component requires a Client Component.
+- Create a separate component for the button.
+- Instead of making the entire component a Client Component, make only the button portion a Client Component.
+- Client Components cannot directly use async/await for component rendering.
+- The Details Page remains a Server Component, so SEO is possible.
+
+**Folder Structure:**
+
+    components/
+    └── apps/
+        └── InstallToggleButton.jsx
+
+- Add `"use client"` to `InstallToggleButton.jsx`.
+
+---
+
+
+<br>
+
+
+## Part-07: Context API & Installed Apps
+
+- Now, when clicking Install, the app should appear on the Installation page.
+- Need Context API to manage installed apps.
+- Create `InstalledAppsProvider.jsx` inside `src/context`.
+- Use `"use client"` because Context API uses client-side features.
+
+**src > context > InstalledAppsProvider.jsx**
+
+
+
+### Separate Providers Component
+
+- Wrapping the application directly with `InstalledAppsProvider` may make the whole app a Client Component.
+- To avoid this, create a separate Providers component.
+
+**src > app > lib > Providers > index.js**
+
+
+
+```jsx
+import InstalledAppsProvider from '@/context/InstalledAppsProvider';
+import React from 'react';
+
+const Providers = ({ children }) => {
+    return (
+        <InstalledAppsProvider>
+            {children}
+        </InstalledAppsProvider>
+    );
+};
+
+export default Providers;
+```
+
+### Wrap the Application with Providers
+
+**layout.js**
+
+```jsx
+<Providers>
+    <Navbar />
+    <main className="pt-[66px]">
+        {children}
+    </main>
+    <div className="p-6 bg-base-200 mt-20 text-2xl">Footer</div>
+</Providers>
+```
+
+- This way, the entire app does not become a Client Component.
+- The Server Components remain safe.
+
+part -7 4:30

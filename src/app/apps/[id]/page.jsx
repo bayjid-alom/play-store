@@ -1,5 +1,7 @@
+import InstallToggleButton from '@/components/apps/InstallToggleButton';
 import { Download, MessageSquare, Star } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
@@ -28,6 +30,11 @@ const AppDetailsPage = async ({ params }) => {
         ratings
     } = app;
     // const chartReversedData = [...ratings].reverse();
+
+
+    // const handleInstallNow = () => {
+    //     console.log("button cliked");
+    // }
 
 
 
@@ -117,11 +124,32 @@ const AppDetailsPage = async ({ params }) => {
 
                     </div>
 
-                    {/* Install Button */}
-                    <button
-                        className="rounded-sm bg-emerald-500 px-4 py-2 text-xs font-semibold text-white transition-colors duration-200 hover:bg-emerald-600">
-                        Install Now ({size} MB)
-                    </button>
+
+
+                    {/* App Actions */}
+                    <div className="flex flex-wrap items-center gap-3">
+
+                        {/* App Size */}
+                        <p className="inline-block rounded border border-slate-200/80 px-2 py-1 text-[11px] font-medium text-slate-500">
+                            {size} MB
+                        </p>
+
+                        {/* Install Button */}
+                        {/* From another separate components */}
+                        <InstallToggleButton></InstallToggleButton>
+
+
+                        {/* Back to Apps Button */}
+                        <Link
+                            href="/apps"
+                            className="inline-flex items-center gap-2 rounded-sm border border-violet-200 px-4 py-2 text-xs font-semibold text-violet-600 transition-colors duration-200 hover:bg-violet-50"
+                        >
+                            ← Back to Apps
+                        </Link>
+
+                    </div>
+
+
 
                 </div>
             </section>
