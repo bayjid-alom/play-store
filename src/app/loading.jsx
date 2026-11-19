@@ -1,9 +1,10 @@
 
 const loading = () => {
+
     return (
         <div>
 
-            <div className='min-h-screen items-center flex justify-center mx-auto '>
+            <div className='min-h-screen items-center flex justify-center mx-auto text-purple-700'>
                 {/* Somehow not working Hashloader */}
                 {/* <HashLoader color='#632EE3' size={35}></HashLoader> */}
                 <span className="loading loading-dots loading-xl"></span>

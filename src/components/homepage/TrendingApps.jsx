@@ -16,7 +16,7 @@ const appsPromise = async function () {
 const TrendingApps = async ({ from }) => {
     const apps = await appsPromise()
     // const { apps, loading } = useApps()
-    console.log(from, '<< This is from');
+    // console.log(from, '<< This is from');
 
 
     return (
@@ -69,7 +69,7 @@ const TrendingApps = async ({ from }) => {
                 {/* View All Button */}
                 {
                     // loading === false && 
-                    from ==="homepage" &&
+                    from === "homepage" &&
                     <div className="flex justify-center mt-8">
                         <Link href="/apps">
                             <button className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#632EE3] to-[#9F62F2] px-8 py-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30">

@@ -11,7 +11,7 @@ const AppCard = ({ app }) => {
     return (
 
 
-        <Link href={`/app-details/${id}`}
+        <Link href={`/apps/${id}`}
             className="app-card group rounded-xl bg-white p-4 shadow-[0_5px_25px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_35px_rgba(99,46,227,0.15)]">
 
             {/* App Image - Next.js fill requires a relative parent container */}

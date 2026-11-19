@@ -207,6 +207,9 @@ Add the following configuration to `next.config.mjs`:
 
 
 
+
+
+
 ## Part-05: Server Components, Data Fetching & Loading States
 
 ### DaisyUI Spinner
@@ -346,4 +349,6 @@ src/
 
 
 
-Part-06 [03:30]
+## Part-06 
+[03:30]
+
